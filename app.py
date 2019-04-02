@@ -30,9 +30,10 @@ def requires_auth(f):
 
 @app.route('/')
 def hello():
-    auth = request.authorization
-    if not auth or not check_auth(auth.username, auth.password):
-        return authenticate()
+    if app.config['ENV'] == 'development':
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
     return 'Hello, World!'
 
 
